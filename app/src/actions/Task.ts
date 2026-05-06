@@ -17,7 +17,7 @@ error :string;
         try{
             await connectDb()
             await TaskModel.create(newTask)
-        }catch(error){
+        }catch(_error){
             state.error='タスクの作成に失敗しました'
             return state;
         }
@@ -34,7 +34,7 @@ error :string;
         try{
             await connectDb()
             await TaskModel.updateOne({_id:id},newTask)
-        }catch(error){
+        }catch(_error){
             state.error='タスクの更新に失敗しました'
             return state;
         }
@@ -50,7 +50,7 @@ export const deleteTask = async(id:string,state:FormState,formData:FormData)=>{
          try{
             await connectDb()
             await TaskModel.deleteOne({_id:id},deleteTask)
-         }catch(error){
+         }catch(_error){
             state.error='タスクの消去に失敗しました'
             return state;
          }

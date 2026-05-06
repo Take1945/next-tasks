@@ -1,7 +1,7 @@
 import EditTaskForm from "@/app/components/EditTaskForm/EditTaskForm"
 import { TaskDocument } from "@/app/src/models/task";
-interface Params {
-    params:{id:string};
+type Params= {
+    params:Promise<{id:string}>;
 }
 const getTask = async(id:string):Promise<TaskDocument>=>{
 const response =await fetch(`${process.env.API_URL}/tasks/${id}`,{
@@ -12,7 +12,7 @@ return data.task as TaskDocument;
 }
 
 const EditTaskPage = async ({params}:Params) => {
-    const id = params.id;
+    const {id}=await params
     const task = await getTask(id);
   return (
     <div className="flex flex-col justify-center py-20">

@@ -10,8 +10,7 @@ interface TaskDeleteButton{
 const TaskDeleteButton:React.FC<TaskDeleteButton> = ({task}) => {
   const id = task._id.toString()
     const initialState:FormState ={error:''} 
-      const deleteTaskWithId = deleteTask.bind(null, id)
-  const[message,formAction,isPending] = useActionState( deleteTask.bind(null, id),initialState)
+  const[_message,formAction] = useActionState( deleteTask.bind(null, id),initialState)
   return (
     <form action={formAction}>
         <button type="submit" className="hover:text-gray-700 text-la 

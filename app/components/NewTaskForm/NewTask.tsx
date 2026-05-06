@@ -7,7 +7,7 @@ const NewTaskForm = () => {
   const inputClass = "block mt-1 py-1.5 px-2 w-full rounded-md border-0 shadow-sm ring-1 ring-inset ring-gray-300";
   const labelClass = "block text-sm font-medium";
   const initialState:FormState={error:''};
-  const[state,formAction]= useActionState(createTask,initialState)
+  const[_state,formAction]= useActionState(createTask,initialState)
   const {pending}=useFormStatus()
 return (
     <div className='mt-10 mx-auto w-full max-w-sm'>

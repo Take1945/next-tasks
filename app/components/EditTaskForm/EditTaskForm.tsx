@@ -21,18 +21,6 @@ const EidtTaskForm: React.FC<EditTaskFormProps> = ({task}) => {
   const initialState:FormState ={error:''} 
   const [state,formAction] =useActionState(updateTaskWithId,initialState)
 
-  
-  const SubmitButton = () => {
-   const{pending}=useFormStatus();
-   return(
-    <button type='submit'disabled={pending} className="mt-2 py-2 w-full rounded-md text-white bg-gray-800 hover:bg-black text-sm font-semibold shadow-sm transition disabled:bg-gray-400">
-          Create
-        </button>
-   )
-  }
-  
-
-
   return (
     <div className='mt-10 mx-auto w-full max-w-sm'>
       <h2 className='mb-6 font-bold text-center'>New Task</h2>
@@ -76,4 +64,12 @@ const EidtTaskForm: React.FC<EditTaskFormProps> = ({task}) => {
   )
 }
 
+  const SubmitButton = () => {
+   const{pending}=useFormStatus();
+   return(
+    <button type='submit'disabled={pending} className="mt-2 py-2 w-full rounded-md text-white bg-gray-800 hover:bg-black text-sm font-semibold shadow-sm transition disabled:bg-gray-400">
+          Create
+        </button>
+   )
+  }
 export default EidtTaskForm
