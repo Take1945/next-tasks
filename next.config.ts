@@ -1,7 +1,11 @@
-import type { NextConfig } from "next";
+// next.config.ts
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  serverExternalPackages: ['mongoose'],
+  turbopack: {
+    resolveExtensions: ['.ts', '.tsx', '.js', '.jsx'],
+  },
+}
 
-export default nextConfig;
+export default nextConfig
