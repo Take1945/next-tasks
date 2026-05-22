@@ -21,7 +21,7 @@ error :string;
             state.error='タスクの作成に失敗しました'
             return state;
         }
-        redirect('/')
+        redirect('/all')
     }
 
         export const updateTask = async(id:string, state:FormState,formData:FormData)=>{
@@ -38,7 +38,7 @@ error :string;
             state.error='タスクの更新に失敗しました'
             return state;
         }
-        redirect('/')
+        redirect('/all')
     }
 
 export const deleteTask = async(id:string,state:FormState,formData:FormData)=>{
@@ -54,5 +54,5 @@ export const deleteTask = async(id:string,state:FormState,formData:FormData)=>{
             state.error='タスクの消去に失敗しました'
             return state;
          }
-redirect('/')
+redirect('/all')
     }
