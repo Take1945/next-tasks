@@ -14,7 +14,7 @@ const NaviList = () => {
         {id:1,label:'All Tasks',link:'/all', icon:<FaTasks className='size-5'/>},
         {id:2,label:'Completed Tasks',link:'/completed', icon:<FaRegCheckSquare className='size-5'/>},
         {id:3,label:'Expired Tasks',link:'/expired', icon:<FaRegClock className='size-5'/>},
-        {id:4,label:'Calender',link:'/calender', icon:<SlCalender className='size-5'/>}
+        
     ];
   return (
     <div className='mt-24'>

@@ -1,4 +1,5 @@
 import NaviList from "./NaviList/NaviList"
+import GoogleLogout from "../Logout/page"
 
 const SideMenu = () => {
   return (
@@ -6,6 +7,7 @@ const SideMenu = () => {
 <div>
     <h1 className='px-2 text-2xl font-bold'>Next Tasks</h1>
     <NaviList/>
+     <GoogleLogout />
 </div>
 
     </div>
