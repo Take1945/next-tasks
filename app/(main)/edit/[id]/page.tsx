@@ -1,11 +1,15 @@
 import EditTaskForm from "@/app/components/EditTaskForm/EditTaskForm"
 import { TaskDocument } from "@/app/src/models/task";
+import { cookies } from "next/headers";
 type Params= {
     params:Promise<{id:string}>;
 }
 const getTask = async(id:string):Promise<TaskDocument>=>{
+  const cookieStore = cookies
 const response =await fetch(`${process.env.API_URL}/tasks/${id}`,{
-    
+     headers:{
+     Cookie: cookieStore.toString(), 
+  },
 })
 const data =await response.json();
 return data.task as TaskDocument;
