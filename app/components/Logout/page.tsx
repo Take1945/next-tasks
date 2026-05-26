@@ -1,5 +1,5 @@
 'use client';
-import {getAuth,signOut} from "firebase/auth";
+import {signOut} from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "@/app/lib/firebase"
 

@@ -3,6 +3,7 @@ import { MdAddTask } from 'react-icons/md';
 import TaskCard from '@/app/components/TaskCard/TaskCard';
 import { getTasks } from '@/app/src/actions/Task'; 
 
+
 export default async function MainPage() {
   const allTasks = await getTasks(); 
 const serializedTasks = allTasks.map((task) => ({
@@ -15,6 +16,7 @@ const serializedTasks = allTasks.map((task) => ({
     <div className='text-gray-800 p-8 h-full overflow-y-auto pb-24'>
       <header className='flex justify-between items-center'>
         <h1 className='text-2xl font-bold flex items-center'>All Tasks</h1>
+        
         <Link href='/news' className='flex items-center gap-1 font-semibold border px-4 py-2 rounded-full shadow-sm text-white bg-gray-800 hover:bg-gray-700'>
           <MdAddTask className='size-5' />
           <div>Add Task</div>

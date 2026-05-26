@@ -1,7 +1,8 @@
 'use client'
 import {signInWithPopup, getIdToken} from "firebase/auth"
-import {auth, provider} from "./lib/firebase"
+import {auth, db, provider} from "./lib/firebase"
 import { useRouter } from "next/navigation";
+import { doc, setDoc } from "firebase/firestore"; 
 
 function SignInButton(){
   const router = useRouter()
@@ -9,6 +10,14 @@ function SignInButton(){
   const signInGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
+      const user = result.user
+
+      await setDoc(doc(db,"user",user.uid),{
+        username:user.displayName||"ゲストユーザー",
+        photoUrl:user.photoURL||"",
+        updatedAt:new Date()
+      },{merge:true});
+
       const idToken = await getIdToken(result.user)
       await fetch('/api/tasks/session', {
         method: 'POST',
