@@ -9,7 +9,8 @@ const router = useRouter()
   const handleLogout = async () => {
 try{
     await signOut(auth);
-    await fetch('/api/session',{method:'DELETE'})
+    await fetch('/api/session',{method:'DELETE'});
+    router.refresh()
     router.push('/')
 } catch(err){
 console.error('LoginError',err)

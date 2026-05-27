@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import { cookies  } from "next/headers";
 import { redirect } from "next/navigation";
 import { adminAuth,adminDb } from "@/app/lib/firebase-admin";
