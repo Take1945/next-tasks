@@ -1,3 +1,5 @@
+export const revalidate = 0
+
 import SideMenu from "@/app/components/SideMenu/SideMenu";
 
 const Mainlayout = ({
