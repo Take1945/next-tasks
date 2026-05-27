@@ -24,7 +24,7 @@ function SignInButton(){
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({idToken})
       })
-      router.push("/all");
+    window.location.href = "/all" ;
     } catch (err) {
       console.error("LoginError", err)
     };

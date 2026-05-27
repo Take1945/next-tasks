@@ -11,7 +11,7 @@ try{
     await signOut(auth);
     await fetch('/api/session',{method:'DELETE'});
     router.refresh()
-    router.push('/')
+    window.location.href = "/all" ;
 } catch(err){
 console.error('LoginError',err)
 }
