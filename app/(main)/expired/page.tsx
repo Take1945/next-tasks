@@ -7,7 +7,7 @@ const getAllTasks = async():Promise<TaskDocument[]>=>{
 const response =await fetch(`${process.env.API_URL}/tasks`,{
   cache:'no-store',
    headers:{
-     Cookie: cookieStore.toString(), 
+     Cookie:  cookieStore.getAll().map(c => `${c.name}=${c.value}`).join('; ')
   },
 });
 if(response.status!== 200){
