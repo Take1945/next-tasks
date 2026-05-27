@@ -5,10 +5,10 @@ type Params= {
     params:Promise<{id:string}>;
 }
 const getTask = async(id:string):Promise<TaskDocument>=>{
-  const cookieStore = cookies
+  const cookieStore =await cookies()
 const response =await fetch(`${process.env.API_URL}/tasks/${id}`,{
      headers:{
-     Cookie: cookieStore.toString(), 
+     Cookie: cookieStore.getAll().map(c => `${c.name}=${c.value}`).join('; ')
   },
 })
 const data =await response.json();

@@ -18,7 +18,11 @@ export async function POST(req: NextRequest) {
       path: '/',
       sameSite:'lax',
     })
-    return NextResponse.json({ status: 'success' })
+    return NextResponse.json({ status: 'success' },{
+    headers: {
+      'Cache-Control': 'no-store, no-cache, must-revalidate',
+    }
+  })
   } catch {
     return NextResponse.json({ error: '認証失敗' }, { status: 401 })
   }

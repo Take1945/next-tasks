@@ -3,7 +3,7 @@ import { TaskDocument } from '@/app/src/models/task';
 import { cookies } from 'next/headers';
 
 const getAllTasks = async():Promise<TaskDocument[]>=>{
-  const cookieStore = await cookies
+  const cookieStore = await cookies()
 const response =await fetch(`${process.env.API_URL}/tasks`,{
   cache:'no-store',
    headers:{

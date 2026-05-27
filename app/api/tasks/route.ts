@@ -7,7 +7,9 @@ export const GET = async()=>{
     try {
 await connectDb();
 const allTasks:TaskDocument[] = await TaskModel.find();
-return NextResponse.json({message:'タスク取得成功' ,tasks:allTasks})
+return NextResponse.json({message:'タスク取得成功' ,tasks:allTasks},{
+     headers:{'Cache-Control': 'no-store, no-cache, must-revalidate',
+    }})
     }catch(error){
 console.log(error)
     }
