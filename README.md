@@ -3,6 +3,13 @@ Next Tasks
 Udemyで学習したタスクアプリを個人で使用できるようにGoogle認証とセッション管理を追加しました。
 右端にGoogleアカウント表示をしようとしていましたがvercelのデプロイ制限がきてまだできていません。
 
+セッション管理
+Firebase Authentication で発行した IDトークンをサーバーサイドで検証し、HttpOnly Cookie にセッションを保存することでセキュアな認証を実装しています。
+
+ログイン時に Firebase Admin SDK で セッションCookie を発行（有効期限5日）
+各ページ・APIルートでは Cookie を検証し、未認証ユーザーはリダイレクト
+セッションCookie は HttpOnly のため JavaScriptからアクセス不可でXSS攻撃に強い
+
 機能
 
 Googleアカウントによる認証
