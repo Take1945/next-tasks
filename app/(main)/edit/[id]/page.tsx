@@ -1,31 +1,46 @@
-import EditTaskForm from "@/app/components/EditTaskForm/EditTaskForm"
-import { TaskDocument } from "@/app/src/models/task";
-import { cookies } from "next/headers";
-type Params= {
-    params:Promise<{id:string}>;
+import TaskCard from "@/app/components/TaskCard/TaskCard"
+import { TaskDocument, TaskModel } from "@/app/src/models/task"
+import { connectDb } from "@/app/src/units/database"
+import { cookies } from "next/headers"
+import { adminAuth } from "@/app/lib/firebase-admin"
+import { redirect } from "next/navigation"
+ 
+const getUserId = async (): Promise<string> => {
+  const cookieStore = await cookies()
+  const sessionCookie = cookieStore.get("session")?.value
+  if (!sessionCookie) redirect("/")
+  const decodedClaims = await adminAuth.verifySessionCookie(sessionCookie, true)
+  return decodedClaims.uid
 }
-const getTask = async(id:string):Promise<TaskDocument>=>{
-  const cookieStore =await cookies()
-const response =await fetch(`${process.env.API_URL}/tasks/${id}`,{
-     headers:{
-     Cookie: cookieStore.getAll().map(c => `${c.name}=${c.value}`).join('; ')
-  },
-})
-const data =await response.json();
-return data.task as TaskDocument;
+ 
+const getAllTasks = async (): Promise<TaskDocument[]> => {
+  await connectDb()
+  const userId = await getUserId()
+  const allTasks = await TaskModel.find({ userId })
+  return allTasks
 }
-
-const EditTaskPage = async ({params}:Params) => {
-    const {id}=await params
-    const task = await getTask(id);
+ 
+const ExpiredTaskPage = async () => {
+  const allTask = await getAllTasks()
+ 
+  const filterAlltask = allTask.filter((task) => {
+    const now = new Date()
+    const dueDate = new Date(task.dueDate)
+    return now > dueDate && task.isCompleted === false
+  })
+ 
   return (
-    <div className="flex flex-col justify-center py-20">
-      <h2 className='text-center text-2xl font-bold'>Edit New Task</h2>
-    <EditTaskForm task={task}/>  </div>
+    <div className='text-gray-800 p-8 h-full overflow-y-auto pb-24'>
+      <header className='flex justify-between items-center'>
+        <h1 className='text-2xl font-bold flex items-center'>Expired Tasks</h1>
+      </header>
+      <div className='mt-8 flex flex-wrap gap-4'>
+        {filterAlltask?.map((task) => task &&
+          <TaskCard key={task._id.toString()} task={task} />
+        )}
+      </div>
+    </div>
   )
-
-
-  
 }
-
-export default EditTaskPage
+ 
+export default ExpiredTaskPage
