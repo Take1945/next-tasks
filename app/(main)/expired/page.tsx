@@ -1,33 +1,25 @@
 import TaskCard from "@/app/components/TaskCard/TaskCard"
-import { TaskDocument, TaskModel } from "@/app/src/models/task"
-import { connectDb } from "@/app/src/units/database"
-import { cookies } from "next/headers"
-import { adminAuth } from "@/app/lib/firebase-admin"
-import { redirect } from "next/navigation"
- 
-const getUserId = async (): Promise<string> => {
-  const cookieStore = await cookies()
-  const sessionCookie = cookieStore.get("session")?.value
-  if (!sessionCookie) redirect("/")
-  const decodedClaims = await adminAuth.verifySessionCookie(sessionCookie, true)
-  return decodedClaims.uid
-}
- 
-const getAllTasks = async (): Promise<TaskDocument[]> => {
-  await connectDb()
-  const userId = await getUserId()
-  const allTasks = await TaskModel.find({ userId })
-  return allTasks
-}
- 
+import { getAllTasks } from "@/app/src/actions/Task"
+
 const ExpiredTaskPage = async () => {
   const allTask = await getAllTasks()
  
-  const filterAlltask = allTask.filter((task) => {
+  // 1. 期限切れ、かつ未完了のタスクだけをフィルタリング
+  const expiredTasksRaw = allTask.filter((task) => {
     const now = new Date()
     const dueDate = new Date(task.dueDate)
     return now > dueDate && task.isCompleted === false
   })
+
+  // 2. 💡 フィルター後のデータを、クライアントに渡せるプレーンな形式（文字列）に変換
+  const filterAlltask = expiredTasksRaw.map((task) => ({
+    ...task,
+    _id: task._id.toString(), // ❌ 特殊オブジェクト から ⭕️ 文字列へ
+    userId: task.userId?.toString(),
+    createdAt: task.createdAt ? new Date(task.createdAt).toISOString() : undefined,
+    updatedAt: task.updatedAt ? new Date(task.updatedAt).toISOString() : undefined,
+    dueDate: task.dueDate ? new Date(task.dueDate).toISOString() : undefined,
+  }))
  
   return (
     <div className='text-gray-800 p-8 h-full overflow-y-auto pb-24'>
@@ -36,7 +28,8 @@ const ExpiredTaskPage = async () => {
       </header>
       <div className='mt-8 flex flex-wrap gap-4'>
         {filterAlltask?.map((task) => task &&
-          <TaskCard key={task._id.toString()} task={task} />
+       
+          <TaskCard key={task._id} task={task as any} />
         )}
       </div>
     </div>

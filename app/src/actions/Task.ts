@@ -3,20 +3,20 @@
 import { redirect } from "next/navigation";
 import { Task, TaskModel } from "../models/task";
 import { connectDb } from "../units/database";
-import { adminAuth } from "@/app/lib/firebase-admin"
-import { cookies } from 'next/headers'
+import { TaskDocument } from "../models/task";
+import getUserId from "@/app/lib/auth";
 
 export interface FormState {
   error: string;
 }
 
-const getUserId = async () => {
-  const cookieStore = await cookies()
-  const session = cookieStore.get('session')?.value
-  if (!session) redirect('/login')
-  const decoded = await adminAuth.verifySessionCookie(session)
-  return decoded.uid
+export const getAllTasks = async (): Promise<TaskDocument[]> => {
+  await connectDb()
+  const userId = await getUserId()
+  const allTasks = await TaskModel.find({ userId }).lean()
+  return allTasks
 }
+
 
 export const getTasks = async () => {
   const userId = await getUserId()

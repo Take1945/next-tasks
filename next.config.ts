@@ -5,19 +5,42 @@ const nextConfig: NextConfig = {
   turbopack: {
     resolveExtensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
-  //  ここから追加：ポップアップの通信を許可するヘッダー設定
   async headers() {
     return [
       {
-        source: '/(.*)', // すべてのページとAPIルートに適用
+        source: '/(.*)',
         headers: [
           {
             key: 'Cross-Origin-Opener-Policy',
-            value: 'same-origin-allow-popups', // ポップアップの操作を許可
+            value: 'same-origin-allow-popups',
           },
         ],
       },
     ]
+  },
+  images: {
+    remotePatterns: [
+      // 💡 lh3 がつくGoogleアカウントのアイコン用（https）
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+      // 💡 エラーに出ている「lh3なし・http」のGoogleアイコン用（追加）
+      {
+        protocol: 'http',
+        hostname: 'googleusercontent.com',
+      },
+      // 💡 万が一のために「lh3なし・https」のパターンも網羅（追加）
+      {
+        protocol: 'https',
+        hostname: 'googleusercontent.com',
+      },
+      // Firebase Storage用
+      {
+        protocol: 'https',
+        hostname: 'firebasestorage.googleapis.com',
+      },
+    ],
   },
 }
 

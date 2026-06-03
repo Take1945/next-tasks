@@ -10,7 +10,7 @@ _: NextRequest,
     try{
 await connectDb();
 const{id}=await params
-const task = await TaskModel.findById(id);
+const task = await TaskModel.findById(id).lean();
 
 if (!task) {
   return NextResponse.json(
