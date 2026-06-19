@@ -1,7 +1,6 @@
 import TaskEditButton from "./TaskEditButton/TaskEditButton"
 import TaskDeleteButton from "./TaskDeleteButton/TaskDeleteButton"
-import { TaskDocument } from "@/app/src/models/task"
-
+import { TaskDocument } from "@/app/src/models/task";
 interface TaskCardProps{
   task:TaskDocument;
 }
@@ -21,7 +20,7 @@ flex flex-col justify-between'>
              ${task.isCompleted?'bg-green-500':'bg-red-500'}`}>{task.isCompleted?'Completed':'Incomplete'}</div>
     <div className='flex gap-4'>
     <TaskEditButton id={task._id.toString()}/>
-    <TaskDeleteButton task={task}/>
+    <TaskDeleteButton id={task._id.toString()}/>
     </div>
     </div>
 </div>

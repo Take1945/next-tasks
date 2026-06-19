@@ -4,11 +4,10 @@ import { deleteTask,FormState } from '@/app/src/actions/Task';
 import { TaskDocument,} from '@/app/src/models/task';
 import { useActionState } from 'react';
 interface TaskDeleteButton{
-    task:TaskDocument
+    id:string;
 }
 
-const TaskDeleteButton:React.FC<TaskDeleteButton> = ({task}) => {
-  const id = task._id.toString()
+const TaskDeleteButton:React.FC<TaskDeleteButton> = ({id}) => {
     const initialState:FormState ={error:''} 
   const[_message,formAction] = useActionState( deleteTask.bind(null, id),initialState)
   return (

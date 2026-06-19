@@ -8,9 +8,10 @@ isCompleted:boolean;
 }
 
 export interface TaskDocument extends Task,Document{
-createdAt:Date;
-updatedAt:Date;
+createdAt:string;
+updatedAt:string;
 }
+
 
 const taskSchema = new mongoose.Schema<TaskDocument>({
   title: {
