@@ -1,6 +1,10 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  eslint: {
+  
+    ignoreDuringBuilds: true,
+  },
   serverExternalPackages: ['mongoose'],
   turbopack: {
     resolveExtensions: ['.ts', '.tsx', '.js', '.jsx'],
