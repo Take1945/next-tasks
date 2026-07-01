@@ -1,73 +1,36 @@
 Next Tasks
-タスク管理アプリです。Googleアカウントでログインし、タスクの作成・編集・削除ができます。
-Udemyで学習したタスクアプリを個人で使用できるようにGoogle認証とセッション管理を追加しました。
-右端にGoogleアカウント表示をしようとしていましたがvercelのデプロイ制限がきてまだできていません。
+Googleアカウントでログインして使えるタスク管理アプリです。
+デモ
+🔗 next-tasks-demo2.vercel.app
+概要
+UdemyのタスクアプリをベースにGoogle認証とセッション管理を独自に追加し、個人で実用できるレベルに仕上げました。FirebaseのIDトークンをサーバーサイドで検証し、HttpOnly Cookieでセッションを管理するセキュアな認証を実装しています。
+技術スタック
+フロントエンド
 
-セッション管理
-Firebase Authentication で発行した IDトークンをサーバーサイドで検証し、HttpOnly Cookie にセッションを保存することでセキュアな認証を実装しています。
+Next.js 15（App Router）
+TypeScript
+Tailwind CSS
 
-ログイン時に Firebase Admin SDK で セッションCookie を発行（有効期限5日）
-各ページ・APIルートでは Cookie を検証し、未認証ユーザーはリダイレクト
-セッションCookie は HttpOnly のため JavaScriptからアクセス不可でXSS攻撃に強い
+認証・バックエンド
+
+Firebase Authentication（Googleサインイン）
+Firebase Admin SDK（セッションCookie発行・検証）
+MongoDB / Mongoose（タスクデータ）
+Cloud Firestore（ユーザーデータ）
+
+インフラ
+
+Vercel
+
+工夫した点
+
+FirebaseのIDトークンをサーバーサイドで検証し、HttpOnly CookieにセッションCookieを保存することでXSS攻撃に強い認証を実装
+セッションの有効期限を5日に設定し、未認証ユーザーは各ページ・APIルートで自動リダイレクト
+タスクを「全タスク・完了済み・期限切れ」で絞り込める一覧表示を実装
 
 機能
 
-Googleアカウントによる認証
+Googleアカウントによるログイン・ログアウト
 タスクの作成・編集・削除
 タスク一覧表示（全タスク・完了済み・期限切れ）
 ユーザーごとのタスク管理
-
-使用技術
-
-フレームワーク: Next.js 15 (App Router)
-言語: TypeScript
-認証: Firebase Authentication (Google サインイン)
-データベース: MongoDB (Mongoose)
-ユーザーデータ: Cloud Firestore
-スタイリング: Tailwind CSS
-デプロイ: Vercel
-
-環境変数
-.env.local に以下を設定してください：
-env# Firebase クライアント
-NEXT_PUBLIC_FIREBASE_API_KEY=
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
-NEXT_PUBLIC_FIREBASE_APP_ID=
-
-# Firebase Admin
-FIREBASE_ADMIN_PROJECT_ID=
-FIREBASE_ADMIN_CLIENT_EMAIL=
-FIREBASE_ADMIN_PRIVATE_KEY=
-
-# MongoDB
-MONGODB_URI=
-
-# API
-API_URL=http://localhost:3000
-
-
-# パッケージインストール
-npm install
-
-# 開発サーバー起動
-npm run dev
-
-app/
-├── components/
-│   ├── EditTaskForm/   # タスク編集フォーム
-│   ├── NewTaskForm/    # タスク作成フォーム
-│   ├── SideMenu/       # サイドメニュー
-│   └── TaskCard/       # タスクカード
-├── src/
-│   ├── actions/        # Server Actions
-│   ├── models/         # Mongoose モデル
-│   └── units/          # DB接続などのユーティリティ
-└── lib/
-    ├── firebase.ts     # Firebase クライアント設定
-    └── firebase-admin.ts # Firebase Admin 設定
-
-
-
