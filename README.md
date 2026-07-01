@@ -1,10 +1,14 @@
 Next Tasks
 Googleアカウントでログインして使えるタスク管理アプリです。
+
 デモ
 🔗 next-tasks-demo2.vercel.app
+
 概要
 UdemyのタスクアプリをベースにGoogle認証とセッション管理を独自に追加し、個人で実用できるレベルに仕上げました。FirebaseのIDトークンをサーバーサイドで検証し、HttpOnly Cookieでセッションを管理するセキュアな認証を実装しています。
+
 技術スタック
+
 フロントエンド
 
 Next.js 15（App Router）
